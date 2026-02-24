@@ -1,6 +1,5 @@
 {
     "name": "test-railway-docker-deployment",
-    "module": "index.ts",
     "type": "module",
     "private": true,
     "devDependencies": {
