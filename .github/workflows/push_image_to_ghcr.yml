@@ -52,5 +52,5 @@ jobs:
                       -H "Content-Type": "application/json"
                       -H "Authorization: Bearer ${{ secrets.RAILWAY_API_TOKEN }}"
                       -d '{
-                          "query": "mutation { serviceInstanceRedeploy(environmentId: ${{ vars.RAILWAY_ENVIRONMENT_ID }}, serviceId: ${{ vars.RAILWAY_SERVICE_ID }}) }"
+                          "query": "mutation { serviceInstanceRedeploy(serviceId: ${{ vars.RAILWAY_SERVICE_ID }}, environmentId: ${{ vars.RAILWAY_ENVIRONMENT_ID }}) }"
                       }'
