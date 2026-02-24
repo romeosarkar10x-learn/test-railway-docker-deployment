@@ -14,6 +14,7 @@ jobs:
             packages: write
             contents: read
             attestations: write
+            deployments: write
             id-token: write
 
         steps:
@@ -55,3 +56,24 @@ jobs:
                       -d '{
                           "query": "mutation { serviceInstanceRedeploy(serviceId: \"${{ vars.RAILWAY_SERVICE_ID }}\", environmentId: \"${{ vars.RAILWAY_ENVIRONMENT_ID}}\") }"
                       }'
+
+            - name: Install jq
+              uses: dcarbone/install-jq-action@v3.2.0
+
+            - name: Get Railway's public URL
+              id: railway_url
+              run: |
+                  URL=$(curl -s https://backboard.railway.com/graphql/v2 \
+                      -H "Content-Type: application/json" \
+                      -H "Authorization: Bearer ${{ secrets.RAILWAY_API_TOKEN }}" \
+                      -d '{
+                          "query": "{ serviceInstance(serviceId: \"${{ vars.RAILWAY_SERVICE_ID }}\", environmentId: \"${{ vars.RAILWAY_ENVIRONMENT_ID }}\") { domains { customDomains { domain } serviceDomains { domain } } } }"
+                      }' | jq -r '
+                          .data.serviceInstance.domains |
+                          if (.customDomains | length) > 0
+                            then "https://" + .customDomains[0].domain
+                            else "https://" + .serviceDomains[0].domain
+                          end
+                      ')
+                  echo "Railway URL: ${URL}"
+                  echo "url=${URL}" >> ${GITHUB_OUTPUT}
