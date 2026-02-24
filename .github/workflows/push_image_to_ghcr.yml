@@ -1,6 +1,7 @@
 name: Push image to GHCR (Github Container Registry)
 
 on:
+    workflow_dispatch:
     push:
         branches:
             - main
