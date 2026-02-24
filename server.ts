@@ -1,8 +1,8 @@
-const port = process.env.PORT;
+const port = 3000;
 
 const server = Bun.serve({
-    port: port ?? 3000,
-    fetch(req) {
+    port,
+    fetch() {
         return new Response(
             `<!DOCTYPE html>
 <html>
