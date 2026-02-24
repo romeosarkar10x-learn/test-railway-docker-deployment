@@ -33,4 +33,4 @@ jobs:
             - name: Echo image ID, digest
               run: |
                   echo Image ID: ${{ steps.docker_build_push.outputs.imageid }}
-                  echo Digest: ${{ steps.docker_buld_push.outputs.digest }}
+                  echo Digest: ${{ steps.docker_build_push.outputs.digest }}
