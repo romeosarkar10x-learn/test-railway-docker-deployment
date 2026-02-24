@@ -28,6 +28,9 @@ jobs:
 
             - name: Build and push docker image to GHCR
               uses: docker/build-push-action@v6
+              with:
+                  push: true
+                  tags: ghcr.io/${{ github.repository }}:latest
               id: docker_build_push
 
             - name: Echo image ID, digest
